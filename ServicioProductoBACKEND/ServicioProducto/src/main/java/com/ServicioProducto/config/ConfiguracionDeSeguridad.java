@@ -6,6 +6,7 @@ import com.ServicioProducto.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -35,15 +36,14 @@ public class ConfiguracionDeSeguridad {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(http -> {
-/*                    http.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
+                    http.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
 
                     http.requestMatchers(HttpMethod.GET, "/api/v1/producto/").hasAnyRole("DESARROLLADOR", "OBSERVADOR");
                     http.requestMatchers(HttpMethod.POST, "/api/v1/producto/").hasRole("DESARROLLADOR");
                     http.requestMatchers(HttpMethod.PUT, "/api/v1/producto/**").hasRole("DESARROLLADOR");
                     http.requestMatchers(HttpMethod.DELETE, "/api/v1/producto/**").hasRole("DESARROLLADOR");
 
-                    http.anyRequest().denyAll();*/
-                    http.anyRequest().permitAll();
+                    http.anyRequest().denyAll();
                 })
                 .addFilterBefore(new JwtTokenValidator(jwtUtils), BasicAuthenticationFilter.class)
                 .build();
